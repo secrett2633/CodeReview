@@ -1,0 +1,24 @@
+name: 'Auto Code Review'
+description: 'Automatically review code changes in pull requests using Claude API'
+inputs:
+  github_token:
+    description: 'GitHub token'
+    required: true
+  github_repository:
+    description: 'GitHub repository'
+    required: true
+  github_pull_request_number:
+    description: 'Pull request number'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+    - name: Start Review
+      shell: bash
+      run: |
+        python3 ${{ github.action_path }}/client.py \
+          --github_token ${{ inputs.github_token }} \
+          --repository ${{ inputs.github_repository }} \
+          --pull_request_number ${{ inputs.github_pull_request_number }}
