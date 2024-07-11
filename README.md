@@ -44,7 +44,6 @@ your-repository/
 ├── action/
 │   ├── client.py
 │   ├── requirements.txt
-│   ├── Dockerfile
 │   └── action.yml
 └── README.md
 ~~~
