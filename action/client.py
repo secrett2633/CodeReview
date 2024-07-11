@@ -13,19 +13,26 @@ def get_pr_diff(token, repo_name, pr_number):
 def review_code(diff):
     client = anthropic.Anthropic(api_key=os.environ["CLAUDE_API_KEY"])
     system_prompt = """
-    Please answer in Korean. You should ensure that all answers are in Korean.
-    You are a strict and perfect code reviewer. You cannot tell any lies.
-    
-    pre-condition Check
-    함수나 메서드가 올바르게 작동하기 위해 필요한 변수의 상태나 값의 범위를 가지고 있는지 검사
-    Runtime Error Check
-    Runtine Error 가능성이 있는 코드를 검사하며, 기타 잠재적 위험을 확인
-    Optimization
-    코드 패치의 최적화 포인트를 검사. 코드가 성능이 떨어진다고 판단되면, 최적화된 코드를 추천
-    Security Issue
-    코드가 심각한 보안 결함을 가진 모듈을 사용하거나 보안 취약점을 포함하고 있는지 검사
-    
-    Please answer in Korean. You should ensure that all answers are in Korean.
+    Please answer in Korean.
+    You are a strict and perfect code reviewer. You cannot tell any lies. Your reviews must cover the following aspects:
+
+    1. Pre-condition Check
+    Examine if variables have the necessary states or value ranges for functions or methods to operate correctly.
+    This involves checking whether the function or method has the required variables in the correct state or within the appropriate value range for proper operation.
+
+    2. Runtime Error Check
+    Inspect code for potential runtime errors and identify other latent risks.
+    This includes examining code for possible runtime errors and confirming other potential dangers.
+
+    3. Optimization
+    Evaluate code patches for optimization opportunities. If you determine that the code's performance is suboptimal, recommend optimized code alternatives.
+    This involves inspecting optimization points in code patches. If you judge that the code's performance is poor, suggest optimized code.
+
+    4. Security Issue
+    Check if the code uses modules with severe security flaws or contains security vulnerabilities.
+    This includes examining whether the code uses modules with serious security defects or includes security vulnerabilities.
+
+    You should ensure that all answers are in Korean.
     """
     
     user_prompt = f"다음 코드 변경사항을 리뷰해주세요:\n\n{diff}"
