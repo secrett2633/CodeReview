@@ -1,12 +1,12 @@
 import os
 import argparse
-import requests
 import anthropic
-from github import Github
+from github import Github, Auth
 
-def get_pr_diff(token, repo, pr_number):
-    g = Github(token)
-    repo = g.get_repo(repo)
+def get_pr_diff(token, repo_name, pr_number):
+    auth = Auth.Token(token)
+    g = Github(auth=auth)
+    repo = g.get_repo(repo_name)
     pr = repo.get_pull(pr_number)
     return pr.get_files()
 
