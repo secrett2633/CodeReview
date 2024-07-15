@@ -107,6 +107,7 @@ def main():
 
     diff = get_pr_diff(args.github_token, args.repository, args.pull_request_number)
     review = review_code(diff)
+    print(review)
     post_review(args.github_token, args.repository, args.pull_request_number, review)
 
 if __name__ == "__main__":
