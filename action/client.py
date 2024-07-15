@@ -90,7 +90,7 @@ def review_code(diff):
         messages=[{"role": "user", "content": user_prompt}]
     )
     
-    return response.content
+    return response.content[0].text
 
 def post_review(token, repo, pr_number, review):
     g = Github(token)
