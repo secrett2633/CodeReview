@@ -106,9 +106,10 @@ def main():
     args = parser.parse_args()
 
     diff = get_pr_diff(args.github_token, args.repository, args.pull_request_number)
-    review = review_code(diff)
-    print(review)
-    post_review(args.github_token, args.repository, args.pull_request_number, review)
+    print(diff)
+    # review = review_code(diff)
+    # print(review)
+    # post_review(args.github_token, args.repository, args.pull_request_number, review)
 
 if __name__ == "__main__":
     main()
