@@ -83,7 +83,7 @@ def review_code(diff):
     user_prompt = f"다음 코드 변경사항을 리뷰해주세요:\n\n{diff}"
     
     response = client.messages.create(
-        model="claude-3-sonnet-20240229",
+        model="claude-3-5-sonnet-20240620",
         max_tokens=1000,
         temperature=0,
         system=system_prompt,
