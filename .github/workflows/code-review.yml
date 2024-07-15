@@ -13,21 +13,12 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v3
         with:
-          python-version: '3.11'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r action/requirements.txt
-      - name: Run code review
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
-        run: |
-          python action/client.py \
-            --github_token ${{ secrets.GITHUB_TOKEN }} \
-            --repository ${{ github.repository }} \
-            --pull_request_number ${{ github.event.pull_request.number }}
+          repository: your-username/your-action-repo
+          ref: main
+          token: ${{ secrets.PAT_TOKEN }}
+      - uses: ./
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          claude_api_key: ${{ secrets.CLAUDE_API_KEY }}
