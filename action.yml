@@ -10,6 +10,9 @@ inputs:
   github_pull_request_number:
     description: 'Pull request number'
     required: true
+  claude_api_key:
+    description: 'Claude API key'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -22,6 +25,9 @@ runs:
         pip install -r requirements.txt
     - name: Start Review
       shell: bash
+      env:
+          GITHUB_TOKEN: ${{ inputs.github_token }}
+          CLAUDE_API_KEY: ${{ inputs.claude_api_key }}
       run: |
         python3 client.py \
           --github_token ${{ inputs.github_token }} \
