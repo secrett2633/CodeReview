@@ -8,7 +8,20 @@ def get_pr_diff(token, repo_name, pr_number):
     g = Github(auth=auth)
     repo = g.get_repo(repo_name)
     pr = repo.get_pull(pr_number)
-    return pr.get_files()
+    files = pr.get_files()
+    
+    diff_content = []
+    for file in files:
+        diff_content.append(f"File: {file.filename}\n")
+        diff_content.append(f"Status: {file.status}\n")
+        diff_content.append(f"Additions: {file.additions}\n")
+        diff_content.append(f"Deletions: {file.deletions}\n")
+        diff_content.append(f"Changes: {file.changes}\n")
+        diff_content.append(f"Patch:\n{file.patch}\n")
+        diff_content.append("-" * 40 + "\n")
+    
+    return "\n".join(diff_content)
+
 
 def review_code(diff):
     client = anthropic.Anthropic(api_key=os.environ["CLAUDE_API_KEY"])
