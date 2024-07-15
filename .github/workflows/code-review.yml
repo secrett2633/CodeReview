@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          repository: your-username/your-action-repo
+          repository: secrett2633/CodeReview
           ref: main
           token: ${{ secrets.PAT_TOKEN }}
       - uses: ./
