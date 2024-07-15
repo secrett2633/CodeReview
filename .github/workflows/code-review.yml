@@ -5,18 +5,29 @@ on:
     paths-ignore:
       - "*.md"
       - "LICENSE"
+
 jobs:
   review:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
     steps:
-      - uses: actions/checkout@v3
-      - name: "Code Review by claude"
-        uses: localsearch-refine/auto-code-review@master
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_repository: ${{ github.repository }}
-          github_pull_request_number: ${{ github.event.pull_request.number }}
-          git_commit_hash: ${{ github.event.pull_request.head.sha }}
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r action/requirements.txt
+      - name: Run code review
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+        run: |
+          python action/client.py \
+            --github_token ${{ secrets.GITHUB_TOKEN }} \
+            --repository ${{ github.repository }} \
+            --pull_request_number ${{ github.event.pull_request.number }}
